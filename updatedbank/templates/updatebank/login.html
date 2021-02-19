@@ -1,0 +1,15 @@
+<style>
+    h1 {
+        text-align: center;
+    }
+</style>
+
+<h1>Sign In</h1>
+<form method="post">
+    {% csrf_token %} {{ form.as_p }}
+    <button type="submit">Sign In</button>
+</form>
+<button type="button" class="btn btn-primary"><a href="{% url 'password_reset'%}">Forgot password?</a> </button><br>
+<br>
+
+<button type="button" class="btn btn-primary"><a href="{% url 'home'%}">Home</a> </button>

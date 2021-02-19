@@ -1,0 +1,44 @@
+<style>
+    h1 {
+        text-align: center;
+    }
+    
+    .button {
+        background-color: #4CAF50;
+        /* Green */
+        border: none;
+        color: white;
+        padding: 16px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        transition-duration: 0.4s;
+        cursor: pointer;
+    }
+    
+    .button1 {
+        background-color: white;
+        color: black;
+        border: 2px solid #0fba00;
+        border-radius: 12px;
+    }
+    
+    .button1:hover {
+        background-color: #a4ff80;
+        color: white;
+    }
+</style>
+
+<div class="container">
+    <h1>Home page</h1>
+
+    <div class="container">
+        <button type="button" class="button button1"><a href="{%url 'signup'%}" class="btn btn-primary">signup </a></button>
+        <button type="button" class="button button1"><a href="{%url 'login'%}" class="btn btn-primary">login </a></button>
+
+        <br><br>
+
+    </div>
+</div>

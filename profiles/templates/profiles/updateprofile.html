@@ -1,0 +1,13 @@
+<style>
+    h1 {
+        text-align: center;
+    }
+</style>
+
+<h1>profile update</h1>
+<form method="post">
+    {% csrf_token %} {{ form.as_p }}
+    <button type="submit">Update</button>
+</form>
+
+<button type="button" class="btn btn-primary"><a href="{% url 'userhome'%}">go back</a> </button>
