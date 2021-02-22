@@ -16,6 +16,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import auth
 import random
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # Create your views here.
@@ -29,35 +30,38 @@ class createProfileView(CreateView):
         return {'user': self.request.user}
 
 
-class updateProfileView(UpdateView):
+class updateProfileView(LoginRequiredMixin,UpdateView):
+    login_url = '/login/'
     model=createprofilemodel
-    fields = "__all__"
+    fields = ['address','date_of_birth','phnonenumber']
 #     # form_class = createProfileForm
     success_url = reverse_lazy('userhome')
     template_name = "profiles/updateprofile.html"
     
-class deleteProfile(DeleteView):
+class deleteProfile(LoginRequiredMixin,DeleteView):
+    login_url = '/login/'
     model= User
     fields = "__all__"
     success_url = reverse_lazy("home")
     template_name="profiles/deleteprofile.html"
 
-class ViewProfile(DetailView):
+class ViewProfile(LoginRequiredMixin,DetailView):
+    login_url = '/login/'
     model = createprofilemodel
     fields="__all__"
     success_url = reverse_lazy('userhome')
     template_name = "profiles/detail.html"
 
-class ViewAccount(DetailView):
-
+class ViewAccount(LoginRequiredMixin,DetailView):
+    login_url = '/login/'
     model = accounInfoModel
     fields="__all__"
     success_url = reverse_lazy('userhome')
     template_name = "profiles/accountdetail.html"
 
 
-class Balanceenq(DetailView):
-
+class Balanceenq(LoginRequiredMixin,DetailView):
+    login_url = '/login/'
     model = accounInfoModel
     fields="balace"
     success_url = reverse_lazy('userhome')
@@ -120,7 +124,7 @@ def change_password(request):
 
 #     return render(request,"profiles/deposit.html",context)
 
-class DepositView(View):
+class DepositView(LoginRequiredMixin,View):
     model = Transferdetails
     template_name = "profiles/deposit.html"
     context = {}

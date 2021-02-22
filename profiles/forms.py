@@ -7,6 +7,7 @@ class createprofileform(ModelForm):
     class Meta:
         model = createprofilemodel
         fields = '__all__'
+        widgets={"user":forms.HiddenInput(),}
 
 
 

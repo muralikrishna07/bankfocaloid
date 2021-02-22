@@ -100,8 +100,9 @@
     <div class="column" style="background-color:rgb(202, 251, 138);">
         <button type="button" class="button button1"><a href="{%url 'updateprofile' uid%}">update profile</a> </button>
         <button type="button" class="button button1"><a href="{%url 'detailprofile' uid%}">profile details</a> </button>
-        <button type="button" class="button button1"><a href="{%url 'change_password'%}">change password</a> </button>
         <button type="button" class="button button1"><a href="{% url 'accountdetail' uid%}">account details</a> </button>
+        <button type="button" class="button button1"><a href="{%url 'change_password'%}">change password</a> </button>
+
     </div>
     <div class="column" style="background-color:rgba(236, 209, 149, 0.931);">
         <button type="button" class="button button2"><a href="{% url 'balance' uid%}">Check balance</a> </button>
