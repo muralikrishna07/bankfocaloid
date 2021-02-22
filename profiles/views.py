@@ -8,7 +8,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView 
 from django.contrib.auth import logout
 from django.http import HttpResponse
-from profiles.models import createprofilemodel,accounInfoModel
+from profiles.models import createprofilemodel,accounInfoModel,Transferdetails
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -87,72 +87,127 @@ def change_password(request):
     })
 
 
-def deposit(request):
-    form=DepositAmountForm()
-    context={}
-    context["form"]=form
-    if request.method=="POST":
+# def deposit(request):s
+#     form=DepositAmountForm()
+#     context={}
+#     context["form"]=form
+#     if request.method=="POST":
+#         form=DepositAmountForm(request.POST)
+#         if form.is_valid():
+#             mpin=form.cleaned_data.get("mpin")
+#             amount=form.cleaned_data.get("amount")
+            
+#             try:
+#                 object=accounInfoModel.objects.get(mpin=mpin)
+                
+#                 bal=object.balace+amount
+                
+#                 object.balace=bal
+            
+#                 object.save()
+
+#             except Exception:
+#                 context["form"] = form
+#                 return render(request, "profiles/deposit.html", context)
+
+#             form.save()
+
+
+#             return redirect("userhome")
+#         else:
+#             context["form"]=form
+#             return render(request, "profiles/deposit.html", context)
+
+#     return render(request,"profiles/deposit.html",context)
+
+class DepositView(View):
+    model = Transferdetails
+    template_name = "profiles/deposit.html"
+    context = {}
+    def get(self, request, *args, **kwargs):
+        form=DepositAmountForm()
+        self.context["form"]=form
+        return render(request, self.template_name, self.context)
+    def post(self, request, *args, **kwargs):
         form=DepositAmountForm(request.POST)
+        self.context={}
         if form.is_valid():
-            mpin=form.cleaned_data.get("mpin")
-            amount=form.cleaned_data.get("amount")
-            
+            mpin = form.cleaned_data.get("mpin")
+            amount = form.cleaned_data.get("amount")
             try:
-                object=accounInfoModel.objects.get(mpin=mpin)
-                
-                bal=object.balace+amount
-                
-                object.balace=bal
-            
+                object = accounInfoModel.objects.get(mpin=mpin)
+                bal = object.balace + amount
+                object.balace = bal
                 object.save()
-
             except Exception:
-                context["form"] = form
-                return render(request, "profiles/deposit.html", context)
-
+                self.context["form"] = form
+                return render(request, self.template_name, self.context)
             form.save()
-
-
             return redirect("userhome")
         else:
-            context["form"]=form
-            return render(request, "profiles/deposit.html", context)
+            self.context["form"] = form
+            return render(request, self.template_name, self.context)
 
-    return render(request,"profiles/deposit.html",context)
+# def withdraw(request):
+#     form=WithdrawAmountForm()
+#     context={}
+#     context["form"]=form
+#     if request.method=="POST":
+#         form=WithdrawAmountForm(request.POST)
+#         if form.is_valid():
+#             mpin=form.cleaned_data.get("mpin")
+#             amount=form.cleaned_data.get("amount")
+            
+#             try:
+#                 object=accounInfoModel.objects.get(mpin=mpin)
+                
+#                 bal=object.balace-amount
+                
+#                 object.balace=bal
+            
+#                 object.save()
+
+#             except Exception:
+#                 context["form"] = form
+#                 return render(request, "profiles/withdraw.html", context)
+
+#             form.save()
 
 
-def withdraw(request):
-    form=WithdrawAmountForm()
-    context={}
-    context["form"]=form
-    if request.method=="POST":
-        form=WithdrawAmountForm(request.POST)
+#             return redirect("userhome")
+#         else:
+#             context["form"]=form
+#             return render(request, "profiles/withdraw.html", context)
+
+#     return render(request,"profiles/withdraw.html",context)
+
+class WithdrawView(View):
+    model = Transferdetails
+    template_name = "profiles/withdraw.html"
+    context = {}
+    def get(self, request, *args, **kwargs):
+        form=DepositAmountForm()
+        self.context["form"]=form
+        return render(request, self.template_name, self.context)
+    def post(self, request, *args, **kwargs):
+        form=DepositAmountForm(request.POST)
+        self.context={}
         if form.is_valid():
-            mpin=form.cleaned_data.get("mpin")
-            amount=form.cleaned_data.get("amount")
-            
+            mpin = form.cleaned_data.get("mpin")
+            amount = form.cleaned_data.get("amount")
             try:
-                object=accounInfoModel.objects.get(mpin=mpin)
-                
-                bal=object.balace-amount
-                
-                object.balace=bal
-            
+                object = accounInfoModel.objects.get(mpin=mpin)
+                bal = object.balace - amount
+                object.balace = bal
                 object.save()
-
             except Exception:
-                context["form"] = form
-                return render(request, "profiles/withdraw.html", context)
-
+                self.context["form"] = form
+                return render(request, self.template_name, self.context)
             form.save()
-
-
             return redirect("userhome")
         else:
-            context["form"]=form
-            return render(request, "profiles/withdraw.html", context)
-
-    return render(request,"profiles/withdraw.html",context)
+            self.context["form"] = form
+            return render(request, self.template_name, self.context)
 
 
 def transfer(request):
@@ -225,3 +280,8 @@ def generateaccno(request):
 
 def profileacc(request):
     return render(request,'profiles/create.html')
+
+
+
+
+
