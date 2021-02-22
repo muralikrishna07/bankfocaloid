@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'updatedbank',
     'profiles',
-    'transaction'
+    
 ]
 
 MIDDLEWARE = [

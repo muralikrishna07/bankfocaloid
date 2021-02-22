@@ -29,16 +29,40 @@
         background-color: #a4ff80;
         color: white;
     }
+    
+    .column {
+        float: left;
+        width: 50%;
+        padding: 10px;
+        height: 90px;
+        text-align: center;
+        /* Should be removed. Only for demonstration */
+    }
+    /* Clear floats after the columns */
+    
+    * {
+        box-sizing: border-box;
+    }
+    
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
 </style>
 
-<div class="container">
-    <h1>Home page</h1>
 
-    <div class="container">
+<h1>Welcome To ITC Bank</h1>
+
+<br>
+<br>
+<br>
+
+<div class="row">
+    <div class="column" style="background-color:rgb(129, 246, 197);">
         <button type="button" class="button button1"><a href="{%url 'signup'%}" class="btn btn-primary">signup </a></button>
+    </div>
+    <div class="column" style="background-color:rgb(202, 251, 138);">
         <button type="button" class="button button1"><a href="{%url 'login'%}" class="btn btn-primary">login </a></button>
-
-        <br><br>
-
     </div>
 </div>

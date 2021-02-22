@@ -8,12 +8,11 @@
     }
 </style>
 
-<h1>profile update</h1>
-<div class="center">
-    <form method="post">
-        {% csrf_token %} {{ form.as_p }}
-        <button type="submit">Update</button>
-    </form>
+<h1>Balance</h1>
+<div class="center">{{request.user.first_name}} {{request.user.last_name}} your current balance is :{{object.balace}}
+
     <br>
+    <br>
+
     <button type="button" class="btn btn-primary"><a href="{% url 'userhome'%}">go back</a> </button>
 </div>

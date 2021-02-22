@@ -2,14 +2,24 @@
     h1 {
         text-align: center;
     }
+    
+    .center {
+        text-align: center;
+        border: 3px solid rgba(230, 230, 230, 0.89);
+    }
 </style>
 
 <h1>Sign In</h1>
-<form method="post">
-    {% csrf_token %} {{ form.as_p }}
-    <button type="submit">Sign In</button>
-</form>
-<button type="button" class="btn btn-primary"><a href="{% url 'password_reset'%}">Forgot password?</a> </button><br>
-<br>
+<div class="center">
 
-<button type="button" class="btn btn-primary"><a href="{% url 'home'%}">Home</a> </button>
+    <form method="post">
+        {% csrf_token %} {{ form.as_p }}
+        <button type="submit">Sign In</button>
+    </form>
+    <button type="button" class="btn btn-primary"><a href="{% url 'password_reset'%}">Forgot password?</a> </button>
+
+    <button type="button" class="btn btn-primary"><a href="{% url 'home'%}">Home</a> </button>
+
+
+</div>
+<p>if you don't have an account, create one <a href="{% url 'signup'%}">signup</a></p>

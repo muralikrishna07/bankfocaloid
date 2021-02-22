@@ -1,11 +1,24 @@
 <style>
-    h1 {
+h1 {
         text-align: center;
     }
+    
+    .center {
+        text-align: center;
+        border: 3px solid rgba(230, 230, 230, 0.89);
+    }
+}
 </style>
 
 <h1>Sign up</h1>
-<form method="post">
-    {% csrf_token %} {{ form.as_p }}
-    <button type="submit">Sign Up</button>
-</form>
+<br>
+<br>
+<div class="center">
+    <form method="post">
+        {% csrf_token %} {{ form.as_p }}
+        <button type="submit">Sign Up</button>
+    </form>
+    <br><br>
+
+    <button type="button" class="btn btn-primary"><a href="{% url 'home'%}">Home</a> </button>
+</div>

@@ -38,30 +38,20 @@
             <td>{{request.user.first_name}} {{request.user.last_name}}</td>
         </tr>
         <tr>
-            <th>Address:</th>
-            <td>{{object.address}}</td>
+            <th>Account-no:</th>
+            <td>{{object.accountNumber}}</td>
         </tr>
+
         <tr>
-            <th>Date-of-Birth:</th>
-            <td>{{object.date_of_birth}}</td>
+            <th>balance:</th>
+            <td>{{object.balace}}</td>
         </tr>
-        <tr>
-            <th>Email_id:</th>
-            <td>{{request.user.email}}</td>
-        </tr>
-        <tr>
-            <th>Phone-number:</th>
-            <td>{{object.phnonenumber}}</td>
-        </tr>
+
+
+
     </table>
-
-
     <br>
     <br>
 
     <button type="button" class="btn btn-primary"><a href="{% url 'userhome'%}">go back</a> </button>
 </div>
-
-
-<br>
-<br>
