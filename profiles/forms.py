@@ -55,7 +55,7 @@ class WithdrawAmountForm(ModelForm):
 class TransferAmountForm(ModelForm):
     class Meta:
         model=Transferdetails
-        fields="__all__"
+        fields=["mpin","accountnumber","amount"]
         widgets={"user":forms.HiddenInput(),}
 
 

@@ -153,7 +153,7 @@ class DepositView(LoginRequiredMixin,View):
             mpin = form.cleaned_data.get("mpin")
             amount = form.cleaned_data.get("amount")
             try:
-                object = accounInfoModel.objects.get(mpin=mpin)
+                object = accounInfoModel.objects.get(username=self.request.user,mpin=mpin)
                 bal = object.balace + amount
                 object.balace = bal
                 object.save()
@@ -216,7 +216,7 @@ class WithdrawView(View):
             mpin = form.cleaned_data.get("mpin")
             amount = form.cleaned_data.get("amount")
             try:
-                object = accounInfoModel.objects.get(mpin=mpin)
+                object = accounInfoModel.objects.get(username=self.request.user,mpin=mpin)
                 bal = object.balace - amount
                 object.balace = bal
                 object.save()
@@ -230,6 +230,9 @@ class WithdrawView(View):
         else:
             self.context["form"] = form
             return render(request, self.template_name, self.context)
+        return render(request, self.template_name, self.context)
+
+        
 
 
 
@@ -249,7 +252,7 @@ class Transfer(View):
             amount = form.cleaned_data.get("amount")
             accountnumber = form.cleaned_data.get("accountnumber")
             try:
-                object = accounInfoModel.objects.get(mpin=mpin)
+                object = accounInfoModel.objects.get(username=self.request.user,mpin=mpin)
                 bal = object.balace - amount
                 object.balace = bal
                 object.save()
