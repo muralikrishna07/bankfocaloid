@@ -1,7 +1,7 @@
 from django.urls import path
 from profiles import views
 
-from profiles.views import createProfileView,success,WithdrawView,transfer,updateProfileView,DepositView,deleteProfile,SignOutView,Balanceenq,ViewAccount,ViewProfile,change_password,generateaccno,profileacc
+from profiles.views import createProfileView,success,WithdrawView,Transfer,updateProfileView,DepositView,AccountactivityView,deleteProfile,SignOutView,Balanceenq,ViewAccount,ViewProfile,change_password,generateaccno,profileacc
 
 
 
@@ -19,6 +19,7 @@ urlpatterns = [
     path("balance/<int:pk>/",Balanceenq.as_view(),name='balance'),
     path("deposit/",DepositView.as_view(),name='deposit'),
     path("wirthdraw/",WithdrawView.as_view(),name='withdraw'),
-    path("transfer/",transfer,name='transfer')
+    path("transfer/",Transfer.as_view(),name='transfer'),
+    path("accountactivity/<int:pk>/",AccountactivityView.as_view(),name='accountactivity')
 
 ]

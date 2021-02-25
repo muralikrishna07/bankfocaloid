@@ -58,7 +58,7 @@
         color: white;
     }
     
-    a {
+    .cls {
         color: black;
         font-size: 20px;
     }
@@ -70,8 +70,8 @@
     
     .column {
         float: left;
-        width: 50%;
-        padding: 10px;
+        width: 100%;
+        padding: 20px;
         height: 90px;
         text-align: center;
         /* Should be removed. Only for demonstration */
@@ -87,6 +87,10 @@
     p {
         text-align: center;
     }
+    
+    .center {
+        text-align: center;
+    }
 </style>
 
 <h1>Welcome {{request.user}}</h1>
@@ -95,24 +99,27 @@
 <br>
 <br>
 <br>{%if uid is None%}
-<button type="button" class="button button1"><a href="{%url 'createprofile'%}">create profile</a> </button>{%else%}
+<button type="button" class="button button1"><a class="cls" href="{%url 'createprofile'%}">create profile</a> </button>{%else%}
 <div class="row">
-    <div class="column" style="background-color:rgb(202, 251, 138);">
-        <button type="button" class="button button1"><a href="{%url 'updateprofile' uid%}">update profile</a> </button>
-        <button type="button" class="button button1"><a href="{%url 'detailprofile' uid%}">profile details</a> </button>
-        <button type="button" class="button button1"><a href="{% url 'accountdetail' uid%}">account details</a> </button>
-        <button type="button" class="button button1"><a href="{%url 'change_password'%}">change password</a> </button>
-
+    <div class="column" style="background-color:#cafb8a;">
+        <button type="button" class="button button1"><a class="cls" href="{%url 'updateprofile' uid%}">update profile</a> </button>
+        <button type="button" class="button button1"><a class="cls" href="{%url 'detailprofile' uid%}">profile details</a> </button>
+        <button type="button" class="button button1"><a class="cls" href="{% url 'accountdetail' uid%}">account details</a> </button>
+        <button type="button" class="button button1"><a class="cls" href="{%url 'accountactivity' uid%}"> account activity</a> </button>
+        <button type="button" class="button button1"><a class="cls" href="{%url 'change_password'%}">change password</a> </button>
     </div>
+</div>
+<br>
+<div class="row">
     <div class="column" style="background-color:rgba(236, 209, 149, 0.931);">
-        <button type="button" class="button button2"><a href="{% url 'balance' uid%}">Check balance</a> </button>
-        <button type="button" class="button button2"><a href="{% url 'deposit'%}">deposit</a> </button>
-        <button type="button" class="button button2"><a href="{% url 'withdraw'%}">withdraw</a> </button>
-        <button type="button" class="button button2"><a href="{% url 'transfer'%}">Transfer</a> </button>
+        <button type="button" class="button button2"><a class="cls" href="{% url 'balance' uid%}">Check balance</a> </button>
+        <button type="button" class="button button2"><a class="cls" href="{% url 'deposit'%}">deposit</a> </button>
+        <button type="button" class="button button2"><a class="cls" href="{% url 'withdraw'%}">withdraw</a> </button>
+        <button type="button" class="button button2"><a class="cls" href="{% url 'transfer'%}">Transfer</a> </button>
     </div>
 </div>
 <p>
-    <button type="button" class="button button3"><a href="{%url 'deleteprofile' uid%}">Delete profile</a> </button> {%endif%}
+    <button type="button" class="button button3"><a class="cls" href="{%url 'deleteprofile' uid%}">Delete profile</a> </button> {%endif%}
 
 </p>
 

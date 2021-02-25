@@ -56,6 +56,8 @@ class TransferAmountForm(ModelForm):
     class Meta:
         model=Transferdetails
         fields="__all__"
+        widgets={"user":forms.HiddenInput(),}
+
 
     def clean(self):
         cleaned_data=super().clean()

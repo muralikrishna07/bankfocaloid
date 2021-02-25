@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from profiles.forms import createprofileform,DepositAmountForm,WithdrawAmountForm,TransferAmountForm
 from django.urls import reverse_lazy
 from django.views import generic
-from django.views.generic import View,FormView,CreateView,DeleteView 
+from django.views.generic import View,FormView,CreateView,DeleteView,ListView
 from django.views.generic.base import RedirectView
 from django.views.generic.detail import DetailView 
 from django.views.generic.edit import UpdateView 
@@ -70,6 +70,20 @@ class Balanceenq(LoginRequiredMixin,DetailView):
 def SignOutView(request):
     logout(request)
     return redirect("login")
+
+class AccountactivityView(LoginRequiredMixin,ListView):
+    login_url = '/login/'
+    model = Transferdetails
+    fields=["accountnumber","amount","date"]
+    template_name = "profiles/accountactivity.html"
+
+    def get_initial(self):
+        return {'user':self.request.user}
+    
+    def get_queryset(self):
+        context = {}
+        mpin = accounInfoModel.objects.get(username=self.request.user).mpin
+        return Transferdetails.objects.filter(mpin=mpin)
 
 
 
@@ -146,7 +160,9 @@ class DepositView(LoginRequiredMixin,View):
             except Exception:
                 self.context["form"] = form
                 return render(request, self.template_name, self.context)
-            form.save()
+            profile = form.save(commit=False)
+            profile.user = request.user
+            profile.save()
             return redirect("userhome")
         else:
             self.context["form"] = form
@@ -207,47 +223,86 @@ class WithdrawView(View):
             except Exception:
                 self.context["form"] = form
                 return render(request, self.template_name, self.context)
-            form.save()
+            profile = form.save(commit=False)
+            profile.user = request.user
+            profile.save()            
             return redirect("userhome")
         else:
             self.context["form"] = form
             return render(request, self.template_name, self.context)
 
 
-def transfer(request):
-    form=TransferAmountForm()
-    context={}
-    context["form"]=form
-    if request.method=="POST":
+
+class Transfer(View):
+    model = Transferdetails
+    template_name = "profiles/transfer.html"
+    context = {}
+    def get(self, request, *args, **kwargs):
+        form=TransferAmountForm()
+        self.context["form"]=form
+        return render(request, self.template_name, self.context)
+    def post(self, request, *args, **kwargs):
         form=TransferAmountForm(request.POST)
+        self.context={}
         if form.is_valid():
-            mpin=form.cleaned_data.get("mpin")
-            amount=form.cleaned_data.get("amount")
+            mpin = form.cleaned_data.get("mpin")
+            amount = form.cleaned_data.get("amount")
             accountnumber = form.cleaned_data.get("accountnumber")
             try:
-                object=accounInfoModel.objects.get(mpin=mpin)
-                object1=accounInfoModel.objects.get(accountNumber=accountnumber)
-                bal=object.balace-amount
-                bal1=object1.balace+amount
-                object.balace=bal
-                object1.balace=bal1
-               
+                object = accounInfoModel.objects.get(mpin=mpin)
+                bal = object.balace - amount
+                object.balace = bal
                 object.save()
+                object1 = accounInfoModel.objects.get(accountNumber=accountnumber)
+                bal1 = object1.balace + amount
+                object1.balace = bal1
                 object1.save()
-
             except Exception:
-                context["form"] = form
-                return render(request, "profiles/transfer.html", context)
-
-            form.save()
-
-
+                self.context["form"] = form
+                return render(request, self.template_name, self.context)
+            profile = form.save(commit=False)
+            profile.user = request.user
+            profile.save()            
             return redirect("userhome")
         else:
-            context["form"]=form
-            return render(request, "profiles/transfer.html", context)
+            self.context["form"] = form
+            return render(request, self.template_name, self.context)
 
-    return render(request,"profiles/transfer.html",context)
+
+# def transfer(request):
+#     form=TransferAmountForm()
+#     context={}
+#     context["form"]=form
+#     if request.method=="POST":
+#         form=TransferAmountForm(request.POST)
+#         if form.is_valid():
+#             mpin=form.cleaned_data.get("mpin")
+#             amount=form.cleaned_data.get("amount")
+#             accountnumber = form.cleaned_data.get("accountnumber")
+#             try:
+#                 object=accounInfoModel.objects.get(mpin=mpin)
+#                 object1=accounInfoModel.objects.get(accountNumber=accountnumber)
+#                 bal=object.balace-amount
+#                 bal1=object1.balace+amount
+#                 object.balace=bal
+#                 object1.balace=bal1
+               
+#                 object.save()
+#                 object1.save()
+
+#             except Exception:
+#                 context["form"] = form
+#                 return render(request, "profiles/transfer.html", context)
+
+#             form.save()
+
+
+#             return redirect("userhome")
+#         else:
+#             context["form"]=form
+#             return render(request, "profiles/transfer.html", context)
+
+#     return render(request,"profiles/transfer.html",context)
 
 
 

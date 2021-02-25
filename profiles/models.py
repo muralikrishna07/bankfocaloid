@@ -27,9 +27,11 @@ class accounInfoModel(models.Model):
         return reverse('success', kwargs={'slug':self.slug})
 
 class Transferdetails(models.Model):
-    mpin=models.IntegerField(max_length=6)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    mpin=models.IntegerField()
     accountnumber=models.CharField(max_length=15)
     amount=models.IntegerField()
+    date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.mpin+ self.accountnumber
